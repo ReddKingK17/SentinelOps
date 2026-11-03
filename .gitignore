@@ -1,0 +1,23 @@
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Virtual environment
+.venv/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Test reports
+.coverage
+htmlcov/
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
