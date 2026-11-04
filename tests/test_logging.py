@@ -45,3 +45,18 @@ def test_invalid_check_is_not_logged():
 
     assert response.status_code == 422
     mock_log.assert_not_called()
+
+
+def test_unapproved_service_identifier_is_rejected():
+    with patch("app.main.logger.info") as mock_log:
+        response = client.post(
+            "/checks",
+            json={
+                "service": "FAKE_PRIVATE_ID_8472",
+                "status": "healthy",
+                "response_time_ms": 45
+            }
+        )
+
+    assert response.status_code == 422
+    mock_log.assert_not_called()
