@@ -1,7 +1,9 @@
 import logging
 
 from fastapi import FastAPI
-
+from fastapi import Request
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
 from app.models.service import ServiceCheck
 from app.security.privacy import sanitize_log
 
@@ -21,6 +23,18 @@ app = FastAPI(
     title="SentinelOps API",
     version="0.1.0"
 )
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(
+    request: Request,
+    exc: RequestValidationError
+):
+    return JSONResponse(
+        status_code=422,
+        content={
+            "detail": "Invalid request data"
+        }
+    )
 
 
 @app.get("/health")
