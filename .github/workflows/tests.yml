@@ -28,3 +28,11 @@ jobs:
 
       - name: Run automated tests
         run: python -m pytest -v
+      
+
+      - name: Build Docker image
+        run: docker build -t sentinelops:ci .
+
+      - name: Verify non-root container user
+        run: |
+          test "$(docker run --rm --entrypoint whoami sentinelops:ci)" = "appuser"
